@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1e40af">
+    <title>Academic Leadership 2026</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e3a8a;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 68px;
+            z-index: 99;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-tabs-container {
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 1rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .card-subtitle {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-top: 0.25rem;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        .badge-primary {
+            background: #dbeafe;
+            color: var(--primary);
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-block {
+            display: flex;
+            width: 100%;
+        }
+
+        /* Progress Bar */
+        .progress {
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, var(--primary) 100%);
+            transition: width 0.5s ease;
+        }
+
+        /* Daily Content */
+        .day-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.5rem 0;
+        }
+
+        .day-btn {
+            min-width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            border: 2px solid var(--gray-300);
+            background: white;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .day-btn.completed {
+            border-color: var(--success);
+            background: #d1fae5;
+        }
+
+        .day-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .day-btn .day-number {
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .day-btn .day-label {
+            font-size: 0.625rem;
+            opacity: 0.8;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin: 1.5rem 0;
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .content-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--gray-700);
+            margin-bottom: 1rem;
+        }
+
+        .content-text strong {
+            color: var(--gray-900);
+            font-weight: 600;
+        }
+
+        .content-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .content-list li {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--gray-50);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        /* Assessment */
+        .question {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: 8px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .question-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 0.5rem;
+            font-weight: 700;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 0.75rem;
+            width: 20px;
+            height: 20px;
+        }
+
+        .scale-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .scale-input input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 5px;
+            background: var(--gray-300);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .scale-input input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin-top: 0.25rem;
+        }
+
+        /* Daily Log Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Progress Charts */
+        .chart-container {
+            height: 200px;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .chart-bar {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: var(--primary-light);
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease;
+        }
+
+        /* Week Overview */
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .week-day {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .week-day.completed {
+            background: var(--success);
+            color: white;
+        }
+
+        .week-day.current {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+        }
+
+        .week-day.incomplete {
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            color: var(--gray-600);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--gray-200);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--gray-600);
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d1fae5;
+            border: 2px solid var(--success);
+            color: var(--success);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1rem;
+            }
+
+            .header-stats {
+                gap: 0.5rem;
+            }
+
+            .stat-value {
+                font-size: 1rem;
+            }
+
+            .nav-tab {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .card-title {
+                font-size: 1.125rem;
+            }
+        }
+
+        /* Streak Display */
+        .streak-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .streak-icon {
+            font-size: 2rem;
+        }
+
+        .streak-text {
+            flex: 1;
+        }
+
+        .streak-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--warning);
+        }
+
+        /* Install Prompt */
+        .install-prompt {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .install-prompt.show {
+            display: flex;
+        }
+
+        .install-prompt button {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <h1>Academic Leadership 2026</h1>
+                <div style="font-size: 0.875rem; opacity: 0.9; margin-top: 0.25rem;">
+                    <span id="currentDate"></span>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat">
+                    <div class="stat-value" id="dayNumber">1</div>
+                    <div class="stat-label">Day</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="progressPercent">0%</div>
+                    <div class="stat-label">Progress</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <div class="nav-tabs-container">
+            <button class="nav-tab active" onclick="switchTab('today')">Today</button>
+            <button class="nav-tab" onclick="switchTab('log')">Daily Log</button>
+            <button class="nav-tab" onclick="switchTab('progress')">Progress</button>
+            <button class="nav-tab" onclick="switchTab('calendar')">Calendar</button>
+            <button class="nav-tab" onclick="switchTab('resources')">Resources</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Install Prompt -->
+        <div class="install-prompt" id="installPrompt">
+            <div>
+                <strong>Install App</strong><br>
+                <small>Add to home screen for easier access</small>
+            </div>
+            <button onclick="installApp()">Install</button>
+        </div>
+
+        <!-- Today Tab -->
+        <div class="tab-content active" id="todayTab">
+            <!-- Current Streak -->
+            <div class="streak-container" id="streakDisplay">
+                <div class="streak-icon">🔥</div>
+                <div class="streak-text">
+                    <div style="font-weight: 600;">Current Streak</div>
+                    <div class="streak-number"><span id="streakDays">0</span> days</div>
+                </div>
+            </div>
+
+            <!-- Day Selector -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Select Day</div>
+                        <div class="card-subtitle">Navigate to any day's content</div>
+                    </div>
+                </div>
+                <div class="day-selector" id="daySelector"></div>
+            </div>
+
+            <!-- Today's Content -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Day <span id="selectedDay">1</span></div>
+                        <div class="card-subtitle" id="dayTitle"></div>
+                    </div>
+                    <span class="badge badge-primary" id="dayWeek"></span>
+                </div>
+
+                <div id="dayContent">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                    <button class="btn btn-primary btn-block" onclick="markDayComplete()">
+                        ✓ Mark Complete
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daily Log Tab -->
+        <div class="tab-content" id="logTab">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Daily Log</div>
+                        <div class="card-subtitle">Reflect on today's learning</div>
+                    </div>
+                </div>
+
+                <div class="success-message" id="logSuccess">
+                    ✓ Daily log saved successfully!
+                </div>
+
+                <form id="dailyLogForm" onsubmit="saveDailyLog(event)">
+                    <div class="form-group">
+                        <label class="form-label">Today's Key Learning</label>
+                        <input type="text" class="form-input" id="keyLearning" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">How I Applied It (or will apply it)</label>
+                        <textarea class="form-textarea" id="application" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Challenge Faced</label>
+                        <input type="text" class="form-input" id="challenge">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Win / Progress Today</label>
+                        <input type="text" class="form-input" id="win" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tomorrow's Micro-Goal</label>
+                        <input type="text" class="form-input" id="microGoal" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Energy Level</label>
+                        <div class="scale-input">
+                            <span>1</span>
+                            <input type="range" id="energyLevel" min="1" max="5" value="3">
+                            <span>5</span>
+                        </div>
+                        <div class="scale-labels">
+                            <span>Exhausted</span>
+                            <span>Energized</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-block">
+                        Save Daily Log
+                    </button>
+                </form>
+
+                <!-- Previous Logs -->
+                <div style="margin-top: 2rem;">
+                    <h3 class="section-title">Previous Logs</h3>
+                    <div id="previousLogs"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tab -->
+        <div class="tab-content" id="progressTab">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Your Progress</div>
+                        <div class="card-subtitle">Track your development journey</div>
+                    </div>
+                </div>
+
+                <!-- Overall Progress -->
+                <div class="content-section">
+                    <div class="section-title">Overall Progress</div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Days Completed</span>
+                        <span><strong><span id="completedDays">0</span> / 365</strong></span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" id="overallProgress"></div>
+                    </div>
+                </div>
+
+                <!-- Monthly Breakdown -->
+                <div class="content-section">
+                    <div class="section-title">Monthly Breakdown</div>
+                    <div id="monthlyProgress"></div>
+                </div>
+
+                <!-- Competency Scores -->
+                <div class="content-section">
+                    <div class="section-title">Competency Development</div>
+                    <div id="competencyScores"></div>
+                </div>
+
+                <!-- Streak Stats -->
+                <div class="content-section">
+                    <div class="section-title">Consistency Stats</div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                        <div style="text-align: center; padding: 1rem; background: var(--gray-50); border-radius: 8px;">
+                            <div style="font-size: 2rem; font-weight: 700; color: var(--primary);" id="currentStreak">0</div>
+                            <div style="font-size: 0.875rem; color: var(--gray-600);">Current Streak</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: var(--gray-50); border-radius: 8px;">
+                            <div style="font-size: 2rem; font-weight: 700; color: var(--success);" id="longestStreak">0</div>
+                            <div style="font-size: 0.875rem; color: var(--gray-600);">Longest Streak</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Tab -->
+        <div class="tab-content" id="calendarTab">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">365-Day Calendar</div>
+                        <div class="card-subtitle">Visual overview of your journey</div>
+                    </div>
+                </div>
+                <div id="yearCalendar"></div>
+            </div>
+        </div>
+
+        <!-- Resources Tab -->
+        <div class="tab-content" id="resourcesTab">
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Program Resources</div>
+                        <div class="card-subtitle">Quick access to all materials</div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <button class="btn btn-primary btn-block" onclick="downloadAllMaterials()">
+                        📥 Download All Materials
+                    </button>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">Quick Links</div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <a href="#" class="btn btn-outline" onclick="switchTab('today'); selectDay(1); return false;">Week 1 Materials</a>
+                        <a href="#" class="btn btn-outline" onclick="showAssessment(); return false;">Baseline Assessment</a>
+                        <a href="#" class="btn btn-outline" onclick="exportProgress(); return false;">Export Progress Data</a>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">App Settings</div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <button class="btn btn-outline" onclick="resetProgress()">⚠️ Reset All Progress</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
